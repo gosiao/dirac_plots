@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-#   gosia, last revision: 17/06/2016   
+#   gosia, last revision: 20/06/2016   
 
 
 import string
@@ -36,7 +36,8 @@ usage = """
 
 """
 
-parser = OptionParser(usage=usage)
+parser = OptionParser(usage)
+
 parser.add_option("--finp",
                   dest="inpfile",
                   action="store")
@@ -69,12 +70,10 @@ if len(sys.argv) < 2:
 
 
 # ----------------------------------------------------------------------------------------------- #
-
 # prepare data
 # ------------
 dd = dirac_data(options.tp)
 
-# densities:
 f = open(options.inpfile, 'r')
 if (options.tp == '3d.scalar'):
     x, y, z, s = numpy.loadtxt(f, unpack=True)
@@ -98,6 +97,7 @@ elif (options.tp == '2d.vector'):
 else:
     print "give correct type; one of:'3d.scalar', '3d.vector', '2d.scalar', '2d.vector'"
 f.close()
+
 
 
 # start plotting

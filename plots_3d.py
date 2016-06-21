@@ -7,6 +7,7 @@ import numpy as np
 import mayavi.mlab as plt
 import math
 
+
 #try:
 #    engine = mayavi.engine
 #except NameError:
@@ -103,24 +104,45 @@ class dirac_plots_3d:
 
 
     def plot_streamlines_3d(self, x, y, z, u, v, w):
-        current_palette = sns.color_palette()
-        sns.palplot(current_palette)
-        cmap = sns.cubehelix_palette(light=1, as_cmap=True)
-#
-        plt.figure(1, size=(400, 400), bgcolor=(1, 1, 1))
-#
-        sns.set_context("notebook", font_scale=1.5, rc={"lines.linewidth": 2.5})
-#       -------------
+#       create a scene
+        plt.figure(1,
+                  size=(400, 400), 
+                  bgcolor=(1.0,1.0,1.0), 
+                  fgcolor=(0.0,0.0,0.0))
+#       prepare data
         src = self.p.pipeline.vector_field(x, y, z, u, v, w)
+        magnitude = self.p.pipeline.extract_vector_norm(src)
+        s = np.sqrt(u*u + v*v + w*w)
+#       plot isosurface (magnitude of a vector field)
+        self.p.pipeline.iso_surface(magnitude, contours=[0.01], color=(0.1,0.0,0.0), opacity=0.3)
+        #self.p.pipeline.iso_surface(magnitude, contours=[0.1], color=(0.0,1.0,1.0), opacity=0.3)
+#       plot streamlines - seeds on isosurface
         #fig=self.p.pipeline.streamline(src, seedtype='plane', seed_scale=2.0) 
         #fig=self.p.quiver3d(x, y, z, u, v, w)
         #self.p.pipeline.vectors(src, scale_factor=3.)
         #self.p.pipeline.vector_cut_plane(src, scale_factor=3)
-        magnitude = self.p.pipeline.extract_vector_norm(src)
-        self.p.pipeline.iso_surface(magnitude, contours=[1.0, 0.1], colormap="Pastel1")
+        #self.p.pipeline.streamline(src, seedtype='plane', seed_scale=2.0) 
         #flow = self.p.flow(u, v, w, seed_scale=1,
         #                   seed_resolution=5,
         #                   integration_direction='both')
+# ------
+#       now find few positions on isosurfaces
+    #    my_actor=p1.actor.actors[0] 
+    #    poly_data_object=p1.mapper.input 
+    #    the_points = array(poly_data_object.points)#(number_of_points by 3) 
+    #    the_cells = reshape(poly_data_object.polys.data.to_array(), [-1,4]) 
+    #    the_cells = the_cells[:,1:] 
+    #    streams = []
+    #    for tp in the_points:
+    #        fl = flow(x,y,z,u,v,w,seed_scale=0.3, seed_resolution=16);
+    #        fl.seed.widget.center = tp
+    #        fl.stream_tracer.initial_integration_step = 0.1
+    #        fl.stream_tracer.maximum_propagation = 30.0
+    #        fl.stream_tracer.integration_direction = 'both'
+    #        fl.seed.widget.enabled = False
+    #        fl.actor.property.opacity = 0.5
+    #        streams.append(fl);
+ 
 
     def plot_3d_test(self, x, y, z, u, v, w, vx, vy, vz, vu, vv, vw):
         f = proj(x, y, z, u, v, w, 'x', 0.0)
@@ -140,6 +162,41 @@ class dirac_plots_3d:
                           color   = stream_color,
                           density = stream_density)
                           #cmap    = stream_cmap)
+
+
+    
+    def plot_many_isosurfaces_3d(self, x1, y1, z1, s1, x2, y2, z2, s2, x3, y3, z3, s3):
+#       global figure:
+        plt.figure(1, size=(400, 400), bgcolor=(1, 1, 1))
+        self.p.orientation_axes(line_width = 1.0, opacity = 0.3)
+#       settings for each systems
+#       system 1
+        for i in range(len(x1)):
+            za = i*8.0
+            zb = i*8.0+6.0
+            fig1_extent = (-10.0, -4.0, 14.0, 8.0, za, zb)
+            src1 = self.p.pipeline.scalar_field(x1[i], y1[i], z1[i], s1[i])
+            fig1 = self.p.pipeline.iso_surface(src1, color=(1.0,0.0,0.0),  contours=[0.01, ], opacity=0.3, extent=fig1_extent) 
+            fig1 = self.p.pipeline.iso_surface(src1, color=(0.0,1.0,1.0), contours=[-0.01, ], opacity=0.3, extent=fig1_extent) 
+            plt.outline(fig1, color=(.7, .7, .7), opacity=0.0, extent=fig1_extent)
+#       system 2
+        for i in range(len(x2)):
+            za = i*8.0
+            zb = i*8.0+6.0
+            fig2_extent = (-2.0, 4.0,  6.0, 0.0, za, zb)
+            src2 = self.p.pipeline.scalar_field(x2[i], y2[i], z2[i], s2[i])
+            fig2 = self.p.pipeline.iso_surface(src2, color=(1.0,0.0,0.0),  contours=[0.01, ], opacity=0.3, extent=fig2_extent) 
+            fig2 = self.p.pipeline.iso_surface(src2, color=(0.0,1.0,1.0), contours=[-0.01, ], opacity=0.3, extent=fig2_extent) 
+            plt.outline(fig2, color=(.7, .7, .7), opacity=0.0, extent=fig2_extent)
+#       system 3
+        for i in range(len(x3)):
+            za = i*8.0
+            zb = i*8.0+6.0
+            fig3_extent = (6.0, 12.0, -2.0, -8.0, za, zb)
+            src3 = self.p.pipeline.scalar_field(x3[i], y3[i], z3[i], s3[i])
+            fig3 = self.p.pipeline.iso_surface(src3, color=(1.0,0.0,0.0),  contours=[0.01, ], opacity=0.3, extent=fig3_extent) 
+            fig3 = self.p.pipeline.iso_surface(src3, color=(0.0,1.0,1.0), contours=[-0.01, ], opacity=0.3, extent=fig3_extent) 
+            plt.outline(fig3, color=(.7, .7, .7), opacity=0.0, extent=fig3_extent)
 
 
 
