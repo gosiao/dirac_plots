@@ -174,7 +174,7 @@ class dirac_plots_3d:
         for i in range(len(x1)):
             za = i*8.0
             zb = i*8.0+6.0
-            fig1_extent = (-10.0, -4.0, 14.0, 8.0, za, zb)
+            fig1_extent = (-10.0, -4.0, 2.0, 14.0, za, zb)
             src1 = self.p.pipeline.scalar_field(x1[i], y1[i], z1[i], s1[i])
             fig1 = self.p.pipeline.iso_surface(src1, color=(1.0,0.0,0.0),  contours=[0.01, ], opacity=0.3, extent=fig1_extent) 
             fig1 = self.p.pipeline.iso_surface(src1, color=(0.0,1.0,1.0), contours=[-0.01, ], opacity=0.3, extent=fig1_extent) 
@@ -183,7 +183,7 @@ class dirac_plots_3d:
         for i in range(len(x2)):
             za = i*8.0
             zb = i*8.0+6.0
-            fig2_extent = (-2.0, 4.0,  6.0, 0.0, za, zb)
+            fig2_extent = (-2.0, 4.0, -6.0, 6.0, za, zb)
             src2 = self.p.pipeline.scalar_field(x2[i], y2[i], z2[i], s2[i])
             fig2 = self.p.pipeline.iso_surface(src2, color=(1.0,0.0,0.0),  contours=[0.01, ], opacity=0.3, extent=fig2_extent) 
             fig2 = self.p.pipeline.iso_surface(src2, color=(0.0,1.0,1.0), contours=[-0.01, ], opacity=0.3, extent=fig2_extent) 
@@ -192,7 +192,7 @@ class dirac_plots_3d:
         for i in range(len(x3)):
             za = i*8.0
             zb = i*8.0+6.0
-            fig3_extent = (6.0, 12.0, -2.0, -8.0, za, zb)
+            fig3_extent = (6.0, 12.0, -14.0, -2.0, za, zb)
             src3 = self.p.pipeline.scalar_field(x3[i], y3[i], z3[i], s3[i])
             fig3 = self.p.pipeline.iso_surface(src3, color=(1.0,0.0,0.0),  contours=[0.01, ], opacity=0.3, extent=fig3_extent) 
             fig3 = self.p.pipeline.iso_surface(src3, color=(0.0,1.0,1.0), contours=[-0.01, ], opacity=0.3, extent=fig3_extent) 

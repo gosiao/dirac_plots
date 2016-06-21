@@ -82,7 +82,7 @@ class molecule:
 #.......plot atoms as 3d points, vary size and color (order of atoms from *cube files):
         if fig_extent:
 #           X
-            f = 0.6
+            f = 0.06
             c = (1.0, 1.0, 0.0)
             self.p.points3d(ax[0], ay[0], az[0], ar[0],
                             scale_factor=f,
@@ -91,7 +91,7 @@ class molecule:
                             scale_mode='none',
                             extent=fig_extent)
 #           O
-            f = 0.4
+            f = 0.04
             c = (1.0, 0.0, 0.0)
             self.p.points3d(ax[5], ay[5], az[5], ar[5],
                             scale_factor=f,
@@ -100,7 +100,7 @@ class molecule:
                             scale_mode='none',
                             extent=fig_extent)
 #           H
-            f = 0.2
+            f = 0.02
             c = (0.8, 0.8, 0.8)
             self.p.points3d(ax[1:5], ay[1:5], az[1:5], ar[1:5],
                             scale_factor=f,
@@ -110,11 +110,11 @@ class molecule:
                             extent=fig_extent)
 #...........plot bonds (order of atoms from *cube files)
 #           h2x
-            self.p.plot3d([ax[0],ax[1]], [ay[0],ay[1]], [az[0],az[1]], tube_radius=0.02, colormap='Oranges', extent=fig_extent)
-            self.p.plot3d([ax[0],ax[2]], [ay[0],ay[2]], [az[0],az[2]], tube_radius=0.02, colormap='Oranges', extent=fig_extent)
+            self.p.plot3d([ax[0],ax[1]], [ay[0],ay[1]], [az[0],az[1]], tube_radius=0.002, colormap='Oranges', extent=fig_extent)
+            self.p.plot3d([ax[0],ax[2]], [ay[0],ay[2]], [az[0],az[2]], tube_radius=0.002, colormap='Oranges', extent=fig_extent)
 #           h2o
-            self.p.plot3d([ax[5],ax[3]], [ay[5],ay[3]], [az[5],az[3]], tube_radius=0.02, colormap='Oranges', extent=fig_extent)
-            self.p.plot3d([ax[5],ax[4]], [ay[5],ay[4]], [az[5],az[4]], tube_radius=0.02, colormap='Oranges', extent=fig_extent)
+            self.p.plot3d([ax[5],ax[3]], [ay[5],ay[3]], [az[5],az[3]], tube_radius=0.002, colormap='Oranges', extent=fig_extent)
+            self.p.plot3d([ax[5],ax[4]], [ay[5],ay[4]], [az[5],az[4]], tube_radius=0.002, colormap='Oranges', extent=fig_extent)
         else:
 #           X
             f = 0.6
@@ -164,15 +164,15 @@ class molecule:
 
     def plot_atoms_3d_3mol(self, n1, r1, x1, y1, z1, n2, r2, x2, y2, z2, n3, r3, x3, y3, z3):
 #       mol1:
-        fig1_extent = (-10.0, -4.0, 14.0, 8.0, 0.0, 6.0)
+        fig1_extent = (-10.0, -4.0, 2.0, 14.0, 0.0, 6.0)
         self.plot_atoms_3d(n1, r1, x1, y1, z1, fig_extent=fig1_extent)
-#       mol1:
-        fig2_extent = (-2.0, 4.0, 6.0, 0.0, 0.0, 6.0)
-        #self.plot_atoms_3d(n2, r2, x2, y2, z2, fig_extent=fig2_extent)
-        self.plot_atoms_3d(n2, r2, x2, y2, z2)
-#       mol1:
-        fig3_extent = (6.0, 12.0, -2.0, -8.0, 0.0, 6.0)
-        #self.plot_atoms_3d(n3, r3, x3, y3, z3, fig_extent=fig3_extent)
-        self.plot_atoms_3d(n3, r3, x3, y3, z3)
+#       mol2:
+        fig2_extent = (-2.0, 4.0, -6.0, 6.0, 0.0, 6.0)
+        #self.plot_atoms_3d(n2, r2, x2, y2, z2)
+        self.plot_atoms_3d(n2, r2, x2, y2, z2, fig_extent=fig2_extent)
+#       mol3:
+        fig3_extent = (6.0, 12.0, -14.0, -2.0, 0.0, 6.0)
+        #self.plot_atoms_3d(n3, r3, x3, y3, z3)
+        self.plot_atoms_3d(n3, r3, x3, y3, z3, fig_extent=fig3_extent)
 
 
