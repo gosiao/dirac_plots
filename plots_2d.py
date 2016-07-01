@@ -7,6 +7,8 @@
 
 import matplotlib.pyplot as plt
 import matplotlib
+from mpl_toolkits.mplot3d import Axes3D
+
 import numpy as np
 import pylab
 import seaborn as sns
@@ -25,9 +27,9 @@ class dirac_plots_2d:
         self.p           = p
         self.x_range     = x_range
         self.y_range     = y_range
-        axes = self.p.gca()
-        axes.set_xlim([self.x_range[0], self.x_range[1]])
-        axes.set_ylim([self.y_range[0], self.y_range[1]])
+        #axes = self.p.gca()
+        #axes.set_xlim([self.x_range[0], self.x_range[1]])
+        #axes.set_ylim([self.y_range[0], self.y_range[1]])
 
 
     def plot_streamlines(self, p, x, y, vx, vy):
@@ -78,6 +80,26 @@ class dirac_plots_2d:
                         cmap   = contour_cmap)
         return pc
 
+    def plot_surface(self, x, y, vx, vy, n):
+        print "buba"
+        fig = plt.figure()
+        ax = fig.add_subplot(1, 2, 1, projection='3d')
+        #ax = fig.gca(projection='3d')
+        #ax.plot_wireframe(x,y,n, cmap=cm.coolwarm)
+      #  ax.plot_wireframe(x, y, n, rstride=10, cstride=10)
+#
+        #X = np.arange(-5, 5, 0.25)
+        #Y = np.arange(-5, 5, 0.25)
+        #X, Y = np.meshgrid(X, Y)
+        #R = np.sqrt(X**2 + Y**2)
+        #Z = np.sin(R)
+        surf = ax.plot_surface(x, y, n, rstride=1, cstride=1, cmap=cm.coolwarm,
+                               linewidth=0, antialiased=False)
+        ax.set_zlim3d(0.0, 1.0)
+#
+        plt.show()
+        
+ 
     def plot_add_legend(self, p, ps, pc):
         contour_bar = p.colorbar(pc)
 

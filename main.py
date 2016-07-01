@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as colors
 import matplotlib
 
+
 from optparse import OptionParser
 
 # local
@@ -91,9 +92,11 @@ elif (options.tp == '2d.scalar'):
     vs = np.array(s).reshape(l1, l1)
 elif (options.tp == '2d.vector'):
     x, y, u, v = numpy.loadtxt(f, unpack=True)
+    n = np.sqrt(u*u + v*v)
     l1, vx, vy = dd.make_1d_to_2d_xy(x, y)
     vu = np.array(u).reshape(l1, -1)
     vv = np.array(v).reshape(l1, -1)
+    vn = np.array(n).reshape(l1, -1)
 else:
     print "give correct type; one of:'3d.scalar', '3d.vector', '2d.scalar', '2d.vector'"
 f.close()
@@ -105,9 +108,8 @@ f.close()
 
 if (options.tp == '3d.scalar' or options.tp == '3d.vector'):
     mlab.figure(fgcolor=(0., 0., 0.), bgcolor=(1, 1, 1))
-if (options.tp == '2d.scalar' or options.tp == '2d.vector'):
-    plt.figure()
-    #ax = fig.add_subplot(111)
+#if (options.tp == '2d.scalar' or options.tp == '2d.vector'):
+#    fig = plt.figure()
 
 # molecule:
 # be careful with units!
@@ -124,9 +126,9 @@ if (options.geomfile):
     if (options.tp == '3d.scalar' or options.tp == '3d.vector'):
         dm = molecule(mlab)
         dm.plot_atoms_3d(atoms_name, atomic_nr, atoms_x, atoms_y, atoms_z)
-    elif (options.tp == '2d.scalar' or options.tp == '2d.vector'):
-        dm = molecule(plt)
-        dm.plot_atoms_2d(atoms_name, atoms_x, atoms_y, atoms_z, x[0], y[0], x[-1], y[-1], x[len(x)/2], y[len(x)/2])
+#    elif (options.tp == '2d.scalar' or options.tp == '2d.vector'):
+#        dm = molecule(plt)
+#        dm.plot_atoms_2d(atoms_name, atoms_x, atoms_y, atoms_z, x[0], y[0], x[-1], y[-1], x[len(x)/2], y[len(x)/2])
 else:
     print "no xyz file given; atoms will not be drawn"
 
@@ -148,14 +150,16 @@ if (options.tp == '2d.vector'):
     dp = dirac_plots_2d(plt, [min(y), max(y)], [min(x), max(x)])
     if (options.plot == 'stream2d'):
        #mlab.figure(1, size=(400, 400), bgcolor=(1, 1, 1))
-       p1 = dp.plot_streamlines(plt,vy, vx, vv, vu)
-       plt.show()
+       p1 = dp.plot_streamlines(vy, vx, vv, vu)
+    elif (options.plot == 'surface'):
+       #mlab.figure(1, size=(400, 400), bgcolor=(1, 1, 1))
+       dp.plot_surface(vy, vx, vv, vu, vn)
+       #plt.show()
 
 
 if (options.mode == 'save_png'):
     mlab.savefig(options.outfile)
-
-if (options.mode == 'show'):
+elif (options.mode == 'show'):
     mlab.show()
 
 #
