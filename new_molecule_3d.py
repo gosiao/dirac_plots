@@ -23,7 +23,7 @@ class molecule_3d:
 #       specific size and color for every element
 #       always in order: X, H, H, H, H, O
         sphere_radius = [0.6, 0.2, 0.2, 0.2, 0.2, 0.4]
-        sphere_color  = [(1.0, 1.0, 0.0), (0.8, 0.8, 0.8), (0.8, 0.8, 0.8), (0.8, 0.8, 0.8), (0.8, 0.8, 0.8), (1.0, 0.0, 0.0)]
+        sphere_color  = [(0.0, 0.5, 0.5), (0.2, 0.2, 0.2), (0.2, 0.2, 0.2), (0.2, 0.2, 0.2), (0.2, 0.2, 0.2), (1.0, 0.0, 0.0)]
         #for i in range(118):
         #    sphere_radius.append(0.05*np.sqrt(i))
         #    r = (118-i)/118.0
@@ -52,22 +52,17 @@ class molecule_3d:
         for i in range(len(pairs)):
             p1 = (x[pairs[i][0]], y[pairs[i][0]], z[pairs[i][0]])
             p2 = (x[pairs[i][1]], y[pairs[i][1]], z[pairs[i][1]])
+#           line:
             line = tvtk.LineSource(point1=p1, point2=p2) 
-            #line_mapper = tvtk.PolyDataMapper()
-            tube = tvtk.TubeFilter(radius=5.0, number_of_sides=10, input=line)
-            tube_mapper = tvtk.PolyDataMapper()
-            #configure_input(add_filter, line)
-            #configure_input_data(line_mapper, line.output)
-            configure_input_data(tube_mapper, tube.output)
-            #line.update()
-            tube.update()
-            tvtk.Property(opacity=0.8, color=(1.0, 1.0, 0.2))
-            #line_actor = tvtk.Actor(mapper=line_mapper)
-            tube_actor = tvtk.Actor(mapper=tube_mapper)
-            #fig.scene.add_actor(line_actor)
-            fig.scene.add_actor(tube_actor)
-            #bond.append(line_actor)
-            bond.append(tube_actor)
+            line_mapper = tvtk.PolyDataMapper()
+            configure_input_data(line_mapper, line.output)
+            line.update()
+            tvtk.Property(opacity=0.8)
+            line_actor = tvtk.Actor(mapper=line_mapper)
+            line_actor.property.line_width = 1.9
+            line_actor.property.color = (0.4, 0.4, 0.4)
+            fig.scene.add_actor(line_actor)
+            bond.append(line_actor)
         return atom, bond
             
 
@@ -127,30 +122,31 @@ class molecule_3d:
 #
 
     def plot_atoms_3d_3mol(self, n1, r1, x1, y1, z1, n2, r2, x2, y2, z2, n3, r3, x3, y3, z3):
-        fig1 = mlab.figure(1, size=(400, 400), bgcolor=(1, 1, 1))
+        fig = mlab.figure(1, size=(400, 400), bgcolor=(1, 1, 1))
 #       mol1:
         fig1_extent = (-10.0, -4.0, 2.0, 14.0, 0.0, 6.0)
-        fig1_shift = [-6.0, 8.0, 3.0]
-        p1, b1 = self.plot_atoms_3d(fig1, n1, r1, x1, y1, z1)
+        fig1_shift = [-10.0, 20.0, 3.0]
+        p1, b1 = self.plot_atoms_3d(fig, n1, r1, x1, y1, z1)
         for p in p1:
             p.position = np.array(fig1_shift)
         for b in b1:
             b.position = np.array(fig1_shift)
-            #p.update()
-        #p2 = p1.parent.parent
-        #p1 = mayavi.tools.pipeline.image_actor(extent=fig1_extent)
-        #p1.actor.position = [-6.0, ]
-        #p1.actor.scale = []
 #       mol2:
         fig2_extent = (-2.0, 4.0, -6.0, 6.0, 0.0, 6.0)
-        fig2_shift = (-2.0, 4.0, -6.0, 6.0, 0.0, 6.0)
-        #self.plot_atoms_3d(n2, r2, x2, y2, z2)
-        #self.plot_atoms_3d(n2, r2, x2, y2, z2, fig_extent=fig2_extent)
+        fig2_shift = (0.0, 10.0, 3.0)
+        p2, b2 = self.plot_atoms_3d(fig, n2, r2, x2, y2, z2)
+        for p in p2:
+            p.position = np.array(fig2_shift)
+        for b in b2:
+            b.position = np.array(fig2_shift)
 #       mol3:
         fig3_extent = (6.0, 12.0, -14.0, -2.0, 0.0, 6.0)
-        fig3_shift = (6.0, 12.0, -14.0, -2.0, 0.0, 6.0)
-        #self.plot_atoms_3d(n3, r3, x3, y3, z3)
-        #self.plot_atoms_3d(n3, r3, x3, y3, z3, fig_extent=fig3_extent)
+        fig3_shift = (10.0, 0.0, 3.0)
+        p3, b3 = self.plot_atoms_3d(fig, n3, r3, x3, y3, z3)
+        for p in p3:
+            p.position = np.array(fig3_shift)
+        for b in b3:
+            b.position = np.array(fig3_shift)
 
  
 # v = mlab.figure()
