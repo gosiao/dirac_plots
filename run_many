@@ -1,0 +1,32 @@
+#!/usr/bin/env python
+import subprocess
+
+
+# show many densities on one plot and arrange them
+
+f1a="test.dens/plot.3d.scalar"  
+#f1b="test.dens/plot.3d.scalar"
+#f1c="test/plot.3d.scalar"
+#f1d="test/plot.3d.scalar"
+#f1e="test/plot.3d.scalar"
+
+f2a="test.dens/plot.3d.scalar"
+#f2b="test.dens/plot.3d.scalar"
+#f2c="test/plot.3d.scalar"
+#f2d="test/plot.3d.scalar"
+#f2e="test/plot.3d.scalar"
+
+f3a="test.dens/plot.3d.scalar"
+#f3b="test.dens/plot.3d.scalar"
+#f3c="test/plot.3d.scalar"
+#f3d="test/plot.3d.scalar"
+#f3e="test/plot.3d.scalar"
+
+fca="test.dens/plot.3d.cube"
+fcb="test.dens/plot.3d.cube"
+fcc="test.dens/plot.3d.cube"
+
+#command = '/home/gosia/work/work_on_gitlab/dirac_plots/plots_allinone.py --finp1="%s %s" --finp2="%s %s" --finp3="%s %s" --mode="show" --fout="ble.png" --t="3d.scalar" --fgeom1="%s" --fgeom2="%s" --fgeom3="%s" --plot="isosurface"' % (f1a, f1b, f2a, f2b, f3a, f3b, fca, fcb, fcc)
+command = '/home/gosia/work/work_on_gitlab/dirac_plots/plots_allinone.py --finp1="%s" --finp2="%s" --finp3="%s" --mode="show" --fout="ble.png" --t="3d.scalar" --fgeom1="%s" --fgeom2="%s" --fgeom3="%s" --plot="isosurface"' % (f1a, f2a, f3a, fca, fcb, fcc)
+process = subprocess.call(command, shell=True)
+
