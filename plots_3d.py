@@ -5,7 +5,11 @@
 
 import numpy as np
 import mayavi.mlab as plt
+from mayavi.filters.transform_data import TransformData
+#from mayavi.filters import *
 import math
+from tvtk.api import tvtk
+from tvtk.common import configure_input_data, configure_input
 
 #try:
 #    engine = mayavi.engine
@@ -91,8 +95,8 @@ class dirac_plots_3d:
         #sns.set_context("notebook", font_scale=1.5, rc={"lines.linewidth": 2.5})
 #       -------------
         src = self.p.pipeline.scalar_field(x, y, z, s)
-        self.p.pipeline.iso_surface(src, color=(1.0,0.0,0.0), contours=[0.001, ], opacity=0.3) 
-        self.p.pipeline.iso_surface(src, color=(0.0,1.0,1.0),contours=[-0.001, ], opacity=0.3) 
+        self.p.pipeline.iso_surface(src, color=(1.0,0.0,0.0), contours=[0.01, ], opacity=0.3) 
+        self.p.pipeline.iso_surface(src, color=(0.0,1.0,1.0),contours=[-0.01, ], opacity=0.3) 
 #
         #self.p.pipeline.volume(src)
         #self.p.pipeline.image_plane_widget(src,
@@ -163,56 +167,57 @@ class dirac_plots_3d:
                           #cmap    = stream_cmap)
 
 
+    def plot_plus_minus_isosurface_3d(self, x, y, z, s, posx, posy, posz):
+        src = self.p.pipeline.scalar_field(x, y, z, s) 
+        pplus = self.p.pipeline.iso_surface(src, color=(1.0,0.0,0.0),  contours=[0.01, ], opacity=0.3)
+        pplus.actor.actor.position = np.array([posx, posy, posz])
+        pminus = self.p.pipeline.iso_surface(src, color=(0.0,1.0,1.0),  contours=[-0.01, ], opacity=0.3)
+        pminus.actor.actor.position = np.array([posx, posy, posz])
+        #return p1
     
     def plot_many_isosurfaces_3d(self, x1, y1, z1, s1, x2, y2, z2, s2, x3, y3, z3, s3):
 #       global figure:
-        plt.figure(1, size=(400, 400), bgcolor=(1, 1, 1))
+        fig = plt.figure(1, size=(400, 400), bgcolor=(1, 1, 1))
         self.p.orientation_axes(line_width = 1.0, opacity = 0.3)
-#       settings for each systems
 #       system 1
         for i in range(len(x1)):
             za = i*8.0
             zb = i*8.0+6.0
             zc = (za+zb)/2.0
-            #fig1_extent = (-10.0, -4.0, 2.0, 14.0, za, zb)
-            #fig1_pos = np.array([-7.0, 8.0, zc])
-            fig1_pos = np.array([-7.0, 8.0, zc])
-            src1 = self.p.pipeline.scalar_field(x1[i], y1[i], z1[i], s1[i])
-            #fig1 = self.p.pipeline.iso_surface(src1, color=(1.0,0.0,0.0),  contours=[0.01, ], opacity=0.3, extent=fig1_extent) 
-            #fig1 = self.p.pipeline.iso_surface(src1, color=(0.0,1.0,1.0), contours=[-0.01, ], opacity=0.3, extent=fig1_extent) 
-            #plt.outline(fig1, color=(.7, .7, .7), opacity=0.0, extent=fig1_extent)
-            fig1 = self.p.pipeline.iso_surface(src1, color=(1.0,0.0,0.0),  contours=[0.01, ], opacity=0.3) 
-            fig1 = self.p.pipeline.iso_surface(src1, color=(0.0,1.0,1.0), contours=[-0.01, ], opacity=0.3) 
-            #fig1.position = fig1_pos
-            fig1 = self.p.move(-7.0, 8.0, 3.0)
+            print '1. i, zc = ', i, zc
+            #p1 = self.plot_plus_minus_isosurface_3d(x1[i], y1[i], z1[i], s1[i], -10.0, 20.0, zc)
+            self.plot_plus_minus_isosurface_3d(x1[i], y1[i], z1[i], s1[i], -10.0, 20.0, zc)
+            #src = self.p.pipeline.scalar_field(x1[i], y1[i], z1[i], s1[i])
+            #p1 = self.p.pipeline.iso_surface(src, color=(1.0,0.0,0.0),  contours=[0.01, ], opacity=0.3)
+            #p1 = self.p.pipeline.iso_surface(src, color=(0.0,1.0,1.0),  contours=[-0.01, ], opacity=0.3)
+            #transform_data_filter = TransformData()
+            #transform_data_filter.transform.translate(np.array([-10.0, 20.0, zc]))
+       #     p1.actor.actor.position = np.array([-10.0, 20.0, zc])
+            #self.p.pipeline.add_filter(transform_data_filter)
+            #self.p.pipeline.user_defined(p1, filter=transform_data_filter)
+            #self.p.pipeline.update()
 #       system 2
         for i in range(len(x2)):
             za = i*8.0
             zb = i*8.0+6.0
             zc = (za+zb)/2.0
-            #fig2_extent = (-2.0, 4.0, -6.0, 6.0, za, zb)
-            fig2_pos = np.array([1.0, 0.0, zc])
-            src2 = self.p.pipeline.scalar_field(x2[i], y2[i], z2[i], s2[i])
-            #fig2 = self.p.pipeline.iso_surface(src2, color=(1.0,0.0,0.0),  contours=[0.01, ], opacity=0.3, extent=fig2_extent) 
-            #fig2 = self.p.pipeline.iso_surface(src2, color=(0.0,1.0,1.0), contours=[-0.01, ], opacity=0.3, extent=fig2_extent) 
-            #plt.outline(fig2, color=(.7, .7, .7), opacity=0.0, extent=fig2_extent)
-            fig2 = self.p.pipeline.iso_surface(src2, color=(1.0,0.0,0.0),  contours=[0.01, ], opacity=0.3) 
-            fig2 = self.p.pipeline.iso_surface(src2, color=(0.0,1.0,1.0), contours=[-0.01, ], opacity=0.3) 
-            #fig2.parent.parent.position = fig2_pos
+            print '2. i, zc = ', i, zc
+            #p2 = self.plot_plus_minus_isosurface_3d(x2[i], y2[i], z2[i], s2[i], 0.0, 10.0, zc)
+            self.plot_plus_minus_isosurface_3d(x2[i], y2[i], z2[i], s2[i], 0.0, 10.0, zc)
+            #transform_data_filter = TransformData()
+            #transform_data_filter.transform.translate(np.array([0.0, 10.0, zc]))
+        #    p2.actor.actor.position = np.array([0.0, 10.0, zc])
 #       system 3
-#        for i in range(len(x3)):
-#            za = i*8.0
-#            zb = i*8.0+6.0
-#            zc = (za+zb)/2.0
-#            #fig3_extent = (6.0, 12.0, -14.0, -2.0, za, zb)
-#            fig3_pos = np.array([9.0, -8.0, zc])
-#            src3 = self.p.pipeline.scalar_field(x3[i], y3[i], z3[i], s3[i])
-#            #fig3 = self.p.pipeline.iso_surface(src3, color=(1.0,0.0,0.0),  contours=[0.01, ], opacity=0.3, extent=fig3_extent) 
-#            #fig3 = self.p.pipeline.iso_surface(src3, color=(0.0,1.0,1.0), contours=[-0.01, ], opacity=0.3, extent=fig3_extent) 
-#            #plt.outline(fig3, color=(.7, .7, .7), opacity=0.0, extent=fig3_extent)
-#            fig3 = self.p.pipeline.iso_surface(src3, color=(1.0,0.0,0.0),  contours=[0.01, ], opacity=0.3) 
-#            fig3 = self.p.pipeline.iso_surface(src3, color=(0.0,1.0,1.0), contours=[-0.01, ], opacity=0.3) 
-#            #fig3.parent.position = fig3_pos
+        for i in range(len(x3)):
+            za = i*8.0
+            zb = i*8.0+6.0
+            zc = (za+zb)/2.0
+            print '3. i, zc = ', i, zc
+            #p3 = self.plot_plus_minus_isosurface_3d(x3[i], y3[i], z3[i], s3[i], 10.0, 0.0, zc)
+            self.plot_plus_minus_isosurface_3d(x3[i], y3[i], z3[i], s3[i], 10.0, 0.0, zc)
+            #transform_data_filter = TransformData()
+            #transform_data_filter.transform.translate(np.array([10.0, 0.0, zc]))
+        #    p3.actor.actor.position = np.array([10.0, 0.0, zc])
 
 
 

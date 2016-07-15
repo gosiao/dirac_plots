@@ -93,15 +93,15 @@ dd = dirac_data(options.tp)
 
 # here we will have 15 input files (5 densities to show for 3 systems)
 # we assume they are in order
+x1 = []
+y1 = []
+z1 = []
+s1 = []
+vx1 = []
+vy1 = []
+vz1 = []
+vs1 = []
 for finp in options.inp1.split():
-    x1 = []
-    y1 = []
-    z1 = []
-    s1 = []
-    vx1 = []
-    vy1 = []
-    vz1 = []
-    vs1 = []
     f = open(finp, 'r')
     if (options.tp == '3d.scalar'):
         x, y, z, s = numpy.loadtxt(f, unpack=True)
@@ -117,15 +117,16 @@ for finp in options.inp1.split():
         vs1.append(vs)
     f.close()
 
+
+x2 = []
+y2 = []
+z2 = []
+s2 = []
+vx2 = []
+vy2 = []
+vz2 = []
+vs2 = []
 for finp in options.inp2.split():
-    x2 = []
-    y2 = []
-    z2 = []
-    s2 = []
-    vx2 = []
-    vy2 = []
-    vz2 = []
-    vs2 = []
     f = open(finp, 'r')
     if (options.tp == '3d.scalar'):
         x, y, z, s = numpy.loadtxt(f, unpack=True)
@@ -141,15 +142,15 @@ for finp in options.inp2.split():
         vs2.append(vs)
     f.close()
 
+x3 = []
+y3 = []
+z3 = []
+s3 = []
+vx3 = []
+vy3 = []
+vz3 = []
+vs3 = []
 for finp in options.inp3.split():
-    x3 = []
-    y3 = []
-    z3 = []
-    s3 = []
-    vx3 = []
-    vy3 = []
-    vz3 = []
-    vs3 = []
     f = open(finp, 'r')
     if (options.tp == '3d.scalar'):
         x, y, z, s = numpy.loadtxt(f, unpack=True)
@@ -164,6 +165,8 @@ for finp in options.inp3.split():
         vz3.append(vz)
         vs3.append(vs)
     f.close()
+
+print 'buba ', len(x1), len(x2), len(x3)
 
 #f = open(options.inpfile, 'r')
 #if (options.tp == '3d.scalar'):
