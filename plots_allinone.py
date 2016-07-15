@@ -198,7 +198,8 @@ print 'buba ', len(x1), len(x2), len(x3)
 # --------------
 
 if (options.tp == '3d.scalar' or options.tp == '3d.vector'):
-    mlab.figure(fgcolor=(0., 0., 0.), bgcolor=(1, 1, 1))
+    fig = mlab.figure(fgcolor=(0., 0., 0.), bgcolor=(1, 1, 1))
+    mlab.text3d(-15.0, 15.0, 2.0, '(a)')
 if (options.tp == '2d.scalar' or options.tp == '2d.vector'):
     plt.figure()
     #ax = fig.add_subplot(111)
@@ -240,6 +241,7 @@ dm.plot_atoms_3d_3mol(atoms_name1, atomic_nr1, atoms_x1, atoms_y1, atoms_z1, ato
 
 if (options.tp == '3d.scalar'):
     dp = dirac_plots_3d(mlab)
+    #dp.set_oa()
     if (options.plot == 'isosurface'):
        #mlab.figure(1, size=(400, 400), bgcolor=(1, 1, 1))
        #dp.plot_isosurface_3d(vx, vy, vz, vs)

@@ -124,24 +124,21 @@ class molecule_3d:
     def plot_atoms_3d_3mol(self, n1, r1, x1, y1, z1, n2, r2, x2, y2, z2, n3, r3, x3, y3, z3):
         fig = mlab.figure(1, size=(400, 400), bgcolor=(1, 1, 1))
 #       mol1:
-        fig1_extent = (-10.0, -4.0, 2.0, 14.0, 0.0, 6.0)
-        fig1_shift = [-10.0, 20.0, 3.0]
+        fig1_shift = [-15.0, 15.0, 3.0]
         p1, b1 = self.plot_atoms_3d(fig, n1, r1, x1, y1, z1)
         for p in p1:
             p.position = np.array(fig1_shift)
         for b in b1:
             b.position = np.array(fig1_shift)
 #       mol2:
-        fig2_extent = (-2.0, 4.0, -6.0, 6.0, 0.0, 6.0)
-        fig2_shift = (0.0, 10.0, 3.0)
+        fig2_shift = (0.0, 0.0, 3.0)
         p2, b2 = self.plot_atoms_3d(fig, n2, r2, x2, y2, z2)
         for p in p2:
             p.position = np.array(fig2_shift)
         for b in b2:
             b.position = np.array(fig2_shift)
 #       mol3:
-        fig3_extent = (6.0, 12.0, -14.0, -2.0, 0.0, 6.0)
-        fig3_shift = (10.0, 0.0, 3.0)
+        fig3_shift = (15.0, -15.0, 3.0)
         p3, b3 = self.plot_atoms_3d(fig, n3, r3, x3, y3, z3)
         for p in p3:
             p.position = np.array(fig3_shift)
