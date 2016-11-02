@@ -1,0 +1,1 @@
+./main.py --finp="test.j/plot.3d.vector" --mode="show" --fout="ble.png" --t="3d.vector" --fgeom="test.j/plot.3d.cube" --plot="stream3d"

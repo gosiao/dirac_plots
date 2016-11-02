@@ -1,0 +1,28 @@
+#!/usr/bin/env python
+import subprocess
+
+
+# show many densities on one plot and arrange them
+
+f1a="/home/gosia/work/work_on_gitlab/nmr-fde-start/calcs/visual/data/h2se_dc_pbe_3z_fullgrid/modified/plot.vis_rho0.supermolecule-isolated-nics.3d.scalar"
+f1b="/home/gosia/work/work_on_gitlab/nmr-fde-start/calcs/visual/data/h2se_dc_pbe_3z_fullgrid/modified/plot.vis_rho0.supermolecule-fnt_0-nics.3d.scalar"
+f1c="/home/gosia/work/work_on_gitlab/nmr-fde-start/calcs/visual/data/h2se_dc_pbe_3z_fullgrid/modified/plot.vis_rho0.supermolecule-fde_0-nics.3d.scalar"
+
+f2a="/home/gosia/work/work_on_gitlab/nmr-fde-start/calcs/visual/data/h2te_dc_pbe_3z_fullgrid/modified/plot.vis_rho0.supermolecule-isolated-nics.3d.scalar"
+f2b="/home/gosia/work/work_on_gitlab/nmr-fde-start/calcs/visual/data/h2te_dc_pbe_3z_fullgrid/modified/plot.vis_rho0.supermolecule-fnt_0-nics.3d.scalar"
+f2c="/home/gosia/work/work_on_gitlab/nmr-fde-start/calcs/visual/data/h2te_dc_pbe_3z_fullgrid/modified/plot.vis_rho0.supermolecule-fde_0-nics.3d.scalar"
+
+
+f3a="/home/gosia/work/work_on_gitlab/nmr-fde-start/calcs/visual/data/h2po_dc_pbe_3z_fullgrid/modified/plot.vis_rho0.supermolecule-isolated-nics.3d.scalar"
+f3b="/home/gosia/work/work_on_gitlab/nmr-fde-start/calcs/visual/data/h2po_dc_pbe_3z_fullgrid/modified/plot.vis_rho0.supermolecule-fnt_0-nics.3d.scalar"
+f3c="/home/gosia/work/work_on_gitlab/nmr-fde-start/calcs/visual/data/h2po_dc_pbe_3z_fullgrid/modified/plot.vis_rho0.supermolecule-fde_0-nics.3d.scalar"
+
+
+fca="/home/gosia/work/work_on_gitlab/nmr-fde-start/calcs/visual/data/h2se_dc_pbe_3z_fullgrid/modified/plot.vis_shield.super.se.iso.3d.cube"
+fcb="/home/gosia/work/work_on_gitlab/nmr-fde-start/calcs/visual/data/h2te_dc_pbe_3z_fullgrid/modified/plot.vis_shield.super.te.iso.3d.cube"
+fcc="/home/gosia/work/work_on_gitlab/nmr-fde-start/calcs/visual/data/h2po_dc_pbe_3z_fullgrid/modified/plot.vis_shield.super.po.iso.3d.cube"
+
+command = '/home/gosia/work/work_on_gitlab/dirac_plots/plots_allinone.py --finp1="%s %s %s" --finp2="%s %s %s" --finp3="%s %s %s" --mode="show" --fout="ble.png" --t="3d.scalar" --fgeom1="%s" --fgeom2="%s" --fgeom3="%s" --plot="isosurface"' % (f1a, f1b, f1c, f2a, f2b, f2c, f3a, f3b, f3c, fca, fcb, fcc)
+#command = '/home/gosia/work/work_on_gitlab/dirac_plots/plots_allinone.py --finp1="%s" --finp2="%s" --finp3="%s" --mode="show" --fout="ble.png" --t="3d.scalar" --fgeom1="%s" --fgeom2="%s" --fgeom3="%s" --plot="isosurface"' % (f1a, f2a, f3a, fca, fcb, fcc)
+process = subprocess.call(command, shell=True)
+

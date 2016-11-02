@@ -1,0 +1,3 @@
+./main.py --finp="test/plot.2d.scalar test/plot.2d.scalar" --mode="show" --fout="ble.png" --t="2d.vector" --fgeom="test.dens/plot.3d.cube" --plot="surface"
+
+##./main.py --finp="test/plot.2d.scalar test/plot.2d.scalar" --mode="show" --fout="ble.png" --t="3d.scalar" --fgeom="test/plot.3d.cube" --plot="isosurface"
