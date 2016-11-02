@@ -1,2 +1,3 @@
+
 # test.3d.isosurface
-python dirac_plots.py --finp="test.3d.isosurface/plot.3d.scalar" --ftype="3d.scalar" --plot="3d.isosurface" --fcube="test.3d.isosurface/plot.3d.cube"
+python ../dirac_plots --finp="test.3d.isosurface/plot.3d.scalar" --ftype="3d.scalar" --plot="3d.isosurface" --fcube="test.3d.isosurface/plot.3d.cube"
